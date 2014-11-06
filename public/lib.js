@@ -1,0 +1,1 @@
+window.MyLib = { foo: function() { } };

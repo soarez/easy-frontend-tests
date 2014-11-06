@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="/node_modules/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="/public/lib.js"></script>
+  <script src="/node_modules/chai/chai.js"></script>
+  <script src="/node_modules/mocha/mocha.js"></script>
+  <script> mocha.setup('bdd'); var assert = chai.assert; </script>
+  <script src="/test/unit/lib.js"></script>
+  <script>
+    var tests = [];
+    var done = false;
+    var runner = mocha.run();
+    runner.on('pass', function(test) {
+      tests.push({
+        fullTitle: test.fullTitle(),
+      });
+    });
+    runner.on('fail', function(test, err){
+      tests.push({
+        fullTitle: test.fullTitle(),
+        error: {
+          message: err.message,
+          stack: err.stack,
+          string: err.toString()
+        }
+      });
+    });
+    runner.on('end', function(){ done = true; });
+  </script>
+</body>
+</html>
+
